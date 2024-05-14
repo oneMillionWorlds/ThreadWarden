@@ -35,7 +35,7 @@ class ThreadWardenTest{
 
             ThreadWarden.setup(rootNode);
 
-            Future<Node> legalThreading = executorService.submit(() -> {
+            Future<Node> legalThreadingFuture = executorService.submit(() -> {
                 //this is fine
                 Node child2 = new Node("child2");
                 Node child3 = new Node("child3");
@@ -44,7 +44,7 @@ class ThreadWardenTest{
             });
 
             try{
-                legalThreading.get();
+                rootNode.attachChild(legalThreadingFuture.get());
             } catch(Exception e){
                 fail("This should not have thrown an exception", e);
             }
